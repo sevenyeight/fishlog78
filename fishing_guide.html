@@ -1,0 +1,391 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .guide-wrap { padding: 1.5rem 0; max-width: 660px; }
+  .tab-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.5rem; }
+  .tab { background: transparent; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); padding: 6px 14px; font-size: 13px; color: var(--color-text-secondary); cursor: pointer; transition: all .15s; }
+  .tab:hover { background: var(--color-background-secondary); }
+  .tab.active { background: var(--color-background-secondary); color: var(--color-text-primary); border-color: var(--color-border-primary); font-weight: 500; }
+  .section { display: none; }
+  .section.active { display: block; }
+  .card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 1rem 1.25rem; margin-bottom: 1rem; }
+  .card h3 { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+  .card p, .card li { font-size: 14px; color: var(--color-text-secondary); line-height: 1.65; }
+  .card ul, .card ol { padding-left: 18px; }
+  .card li { margin-bottom: 4px; }
+  .badge { display: inline-block; font-size: 11px; font-weight: 500; padding: 2px 8px; border-radius: 20px; margin-right: 6px; margin-bottom: 4px; }
+  .badge-green { background: var(--color-background-success); color: var(--color-text-success); }
+  .badge-blue { background: var(--color-background-info); color: var(--color-text-info); }
+  .badge-amber { background: var(--color-background-warning); color: var(--color-text-warning); }
+  .badge-red { background: var(--color-background-danger); color: var(--color-text-danger); }
+  .grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 10px; }
+  .lure-card { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 12px; }
+  .lure-card h4 { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
+  .lure-card p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.55; }
+  .tip-box { border-left: 2px solid var(--color-border-info); background: var(--color-background-info); border-radius: 0 var(--border-radius-md) var(--border-radius-md) 0; padding: 10px 14px; margin-bottom: 10px; font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+  .tip-box strong { color: var(--color-text-primary); }
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th { background: var(--color-background-secondary); text-align: left; padding: 8px 10px; font-weight: 500; font-size: 12px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: .04em; }
+  td { padding: 8px 10px; border-top: 0.5px solid var(--color-border-tertiary); color: var(--color-text-secondary); vertical-align: top; }
+  td:first-child { color: var(--color-text-primary); font-weight: 500; }
+  .prog-bar { background: var(--color-border-tertiary); border-radius: 4px; height: 6px; margin-top: 4px; }
+  .prog-fill { height: 6px; border-radius: 4px; background: var(--color-text-info); }
+  .step { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+  .step-num { min-width: 28px; height: 28px; border-radius: 50%; background: var(--color-background-info); color: var(--color-text-info); font-size: 13px; font-weight: 500; display: flex; align-items: center; justify-content: center; }
+  .step-body { font-size: 14px; color: var(--color-text-secondary); line-height: 1.65; }
+  .step-body strong { color: var(--color-text-primary); font-weight: 500; }
+  .ask-btn { display: inline-block; margin-top: 10px; padding: 6px 14px; font-size: 13px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: transparent; color: var(--color-text-secondary); cursor: pointer; }
+  .ask-btn:hover { background: var(--color-background-secondary); }
+</style>
+
+<div class="guide-wrap">
+  <h2 style="h2">The complete beginner's fishing guide</h2>
+  <p style="font-size:14px;color:var(--color-text-secondary);margin:6px 0 18px;line-height:1.6">From zero to intermediate — everything you need to start catching fish with confidence.</p>
+
+  <div class="tab-bar">
+    <button class="tab active" onclick="show('gear')">Gear & setup</button>
+    <button class="tab" onclick="show('cast')">Casting</button>
+    <button class="tab" onclick="show('lures')">Lures</button>
+    <button class="tab" onclick="show('where')">Where & when</button>
+    <button class="tab" onclick="show('technique')">Technique</button>
+    <button class="tab" onclick="show('reading')">Reading water</button>
+    <button class="tab" onclick="show('catch')">Catch process</button>
+    <button class="tab" onclick="show('next')">Next level</button>
+  </div>
+
+  <!-- GEAR -->
+  <div id="section-gear" class="section active">
+    <div class="card">
+      <h3>Your core setup (spin fishing)</h3>
+      <p style="margin-bottom:10px">You're using a telescopic pole + spinning reel setup, which is a solid beginner combo. Here's how the whole system works together.</p>
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Rod</strong> — Your telescopic rod works fine. A 6–7 ft medium-light to medium rod is ideal for casting lures. Longer = more casting distance.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Reel</strong> — You're considering the <strong>Zebco 33 Spincast</strong>, which is the right call. Spincast reels have a closed face that prevents line tangles (bird's nests) because you press a button to cast instead of managing a bail.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Line</strong> — Use 8–12 lb monofilament for most freshwater lure fishing. Don't overfill the spool — leave about 1/8 inch from the rim. Overfilling = bird's nests.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Leader & snap swivel</strong> — Tie a small snap swivel at the end of your main line. This lets you swap lures in seconds AND prevents line twist from spinning lures like Rooster Tails.</div></div>
+    </div>
+    <div class="card">
+      <h3>The bird's nest problem — solved</h3>
+      <p style="margin-bottom:8px">The three main causes of tangles with a spinning reel:</p>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Cause</th><th>Fix</th></tr>
+          <tr><td>Line overfill</td><td>Only fill spool to 1/8" from rim</td></tr>
+          <tr><td>Opening bail too early</td><td>Wait until lure hits water before opening bail</td></tr>
+          <tr><td>Slack line during retrieve</td><td>Keep rod tip up, reel steadily — no slack</td></tr>
+          <tr><td>Casting too hard</td><td>Smooth, controlled motion — power comes from the tip, not your arm</td></tr>
+        </table>
+      </div>
+      <div style="margin-top:12px">
+        <div class="tip-box"><strong>Best fix:</strong> Switch to the Zebco 33 Spincast. The closed face design physically prevents most bird's nests by covering the spool.</div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Gear checklist</h3>
+      <div class="grid2">
+        <div><span class="badge badge-green">Have</span><ul><li>Telescopic rod</li><li>Cooler for catch</li></ul></div>
+        <div><span class="badge badge-amber">Get soon</span><ul><li>Zebco 33 Spincast reel</li><li>8–10 lb monofilament line</li><li>Snap swivels (size 10–12)</li><li>Kastmaster lures (⅜ oz)</li><li>Rooster Tail spinners</li><li>California 1-day sport fishing license</li><li>Small pliers / hook remover</li></ul></div>
+      </div>
+    </div>
+    <button class="ask-btn" onclick="sendPrompt('Tell me more about setting up a Zebco 33 Spincast reel')">Ask about reel setup ↗</button>
+  </div>
+
+  <!-- CASTING -->
+  <div id="section-cast" class="section">
+    <div class="card">
+      <h3>Overhead cast (the essential cast)</h3>
+      <p style="margin-bottom:10px">This is the cast you'll use 90% of the time. With a Spincast reel, it's even simpler — just hold the thumb button.</p>
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Hold</strong> — Grip the rod handle comfortably. With a Spincast, press and hold the thumb button on the back of the reel.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Position</strong> — Point the rod toward your target at roughly 2 o'clock (slightly forward from straight up). Lure should hang about 12 inches from rod tip.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Load</strong> — Bring the rod back smoothly to 10–11 o'clock behind your head. Feel the rod "load" (bend slightly) under the lure's weight.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Release</strong> — Sweep the rod forward. Release the thumb button at about 1–2 o'clock (when rod is pointing roughly at your target). This timing controls your accuracy.</div></div>
+      <div class="step"><div class="step-num">5</div><div class="step-body"><strong>Follow through</strong> — Let the rod tip follow through toward your target. Keep light thumb contact on the button to slow the lure before it hits water, preventing slack.</div></div>
+    </div>
+    <div class="card">
+      <h3>Sidearm cast (for low overhangs)</h3>
+      <p style="margin-bottom:10px">Use when trees or bridges block overhead room. Same mechanics, just rotate 90° sideways.</p>
+      <ul>
+        <li>Cast parallel to the water surface</li>
+        <li>Great for skipping lures under docks — a key fish-catching spot</li>
+        <li>Lower power than overhead — good for closer targets</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Accuracy tips</h3>
+      <div class="tip-box"><strong>Release timing is everything.</strong> Release too early = cast goes high and short. Release too late = hits the water right in front of you. Practice aiming at a hula hoop or bucket in your backyard before your next trip.</div>
+      <ul>
+        <li>Pick a specific target (a rock, a shadow on the water) — don't just cast "out there"</li>
+        <li>Power comes from the rod tip, not your arm. A smooth, controlled flick beats a hard throw every time</li>
+        <li>Cast into the wind if possible for better accuracy</li>
+        <li>10–15 minutes of backyard practice before each trip pays off fast</li>
+      </ul>
+    </div>
+    <button class="ask-btn" onclick="sendPrompt('How do I skip a lure under a dock?')">Ask about dock skipping ↗</button>
+  </div>
+
+  <!-- LURES -->
+  <div id="section-lures" class="section">
+    <div class="card">
+      <h3>Your starter lure kit</h3>
+      <p style="margin-bottom:12px">Start with these three — they cover most freshwater situations in Southern California.</p>
+      <div class="grid2">
+        <div class="lure-card">
+          <h4>Kastmaster (⅜ oz)</h4>
+          <span class="badge badge-green">Best beginner lure</span>
+          <p>Heavy spoon that casts incredibly far. Cast out, let it sink a few seconds, reel in at medium speed. The wobbling flash mimics an injured baitfish. Colors: chrome, gold, blue/chrome.</p>
+        </div>
+        <div class="lure-card">
+          <h4>Rooster Tail (1/6–¼ oz)</h4>
+          <span class="badge badge-blue">For trout & bass</span>
+          <p>Spinning blade creates flash and vibration. Cast and reel in slow-to-medium — blade should be spinning. Colors: white/red, black, yellow. Use a snap swivel to prevent line twist.</p>
+        </div>
+        <div class="lure-card">
+          <h4>Zoom Fluke (soft plastic)</h4>
+          <span class="badge badge-amber">Step 2 lure</span>
+          <p>Soft plastic jerkbait — rig it weightless on a 3/0 hook. Cast near the bank, twitch-twitch-pause. Deadly for bass hiding in shallow cover.</p>
+        </div>
+        <div class="lure-card">
+          <h4>Inline spinner (Mepps #2)</h4>
+          <span class="badge badge-blue">Classic all-rounder</span>
+          <p>Similar to Rooster Tail but slightly larger profile. Excellent for trout, bass, and crappie. Just cast and retrieve at a speed that keeps the blade spinning.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Retrieve styles</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Style</th><th>How to do it</th><th>Best for</th></tr>
+          <tr><td>Steady retrieve</td><td>Reel at constant medium speed</td><td>Kastmaster, Rooster Tail, spinners</td></tr>
+          <tr><td>Slow roll</td><td>Reel very slowly — lure stays near bottom</td><td>Spoons, swimbaits — cold water</td></tr>
+          <tr><td>Twitch & pause</td><td>Rod tip twitch, 1–2 sec pause, repeat</td><td>Soft plastics, jerkbaits</td></tr>
+          <tr><td>Lift & drop</td><td>Raise rod tip, reel slack, drop, repeat</td><td>Jigs, heavy spoons</td></tr>
+          <tr><td>Burn & kill</td><td>Fast reel, then sudden stop</td><td>Bass reaction strikes</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Color selection (simple rule)</h3>
+      <ul>
+        <li><strong>Clear water:</strong> Natural colors — chrome, silver, white, natural shad</li>
+        <li><strong>Murky water:</strong> High-contrast colors — chartreuse, orange, gold, bright red</li>
+        <li><strong>Sunny day:</strong> Chrome, silver, white — mimics real baitfish flash</li>
+        <li><strong>Overcast/low light:</strong> Gold, firetiger, bright colors stand out more</li>
+        <li>If one color isn't getting bites after 20 minutes, switch. Confidence in your color matters.</li>
+      </ul>
+    </div>
+    <button class="ask-btn" onclick="sendPrompt('What lures work best for bass in the LA area?')">Ask about local lure recommendations ↗</button>
+  </div>
+
+  <!-- WHERE & WHEN -->
+  <div id="section-where" class="section">
+    <div class="card">
+      <h3>Best spots near La Puente / LA area</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Location</th><th>Species</th><th>Notes</th></tr>
+          <tr><td>Puddingstone Reservoir (Bonelli Park)</td><td>Trout, bass, catfish</td><td>~15 min from La Puente. Stocked with trout regularly. Great for beginners.</td></tr>
+          <tr><td>Santa Fe Reservoir</td><td>Trout, bass, crappie</td><td>Close and easy access. Very beginner-friendly shoreline.</td></tr>
+          <tr><td>Legg Lake (Whittier Narrows)</td><td>Catfish, bass, trout</td><td>Multiple small lakes. Very relaxed, good for learning.</td></tr>
+          <tr><td>Lake Piru</td><td>Bass, crappie, bluegill</td><td>~1 hr drive. Excellent bass fishing. Worth a day trip.</td></tr>
+          <tr><td>Lake Castaic</td><td>Bass (world-class), trout</td><td>~1 hr drive. One of the best bass lakes in California.</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Time of day</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Time</th><th>Activity level</th><th>Why</th></tr>
+          <tr><td>Sunrise to 2 hrs after</td><td><span class="badge badge-green">Best</span></td><td>Fish are actively feeding, water is coolest, less boat traffic</td></tr>
+          <tr><td>Midday (10am–3pm)</td><td><span class="badge badge-red">Worst</span></td><td>Sun is high, fish go deep or into shade. Fish slow and deep if you must.</td></tr>
+          <tr><td>Late afternoon (4–6pm)</td><td><span class="badge badge-amber">Good</span></td><td>Temperature drops, fish become active again</td></tr>
+          <tr><td>Sunset to 1 hr after</td><td><span class="badge badge-green">Excellent</span></td><td>Second peak feeding window — some of the best bass fishing happens here</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Weather & conditions</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Condition</th><th>What to do</th></tr>
+          <tr><td>Overcast / cloudy</td><td>Prime time — fish feed aggressively in low light. Fish shallower. Use bright or contrasting colors.</td></tr>
+          <tr><td>Sunny & clear</td><td>Fish deeper or in shade. Use natural chrome/silver colors. Target shadows under docks, trees.</td></tr>
+          <tr><td>Before a storm</td><td>Excellent fishing — pressure dropping makes fish feed hard. Get out before the rain hits.</td></tr>
+          <tr><td>After a cold front</td><td>Toughest conditions. Fish slow down, go deep. Drop retrieve speed significantly.</td></tr>
+          <tr><td>Light rain</td><td>Great for bass — rain oxygenates water and creates surface disturbance that makes fish less wary.</td></tr>
+          <tr><td>High wind</td><td>Cast with the wind at your back. Fish the windward bank — wind pushes baitfish there.</td></tr>
+        </table>
+      </div>
+    </div>
+    <button class="ask-btn" onclick="sendPrompt('What is the best time to fish at Puddingstone Reservoir?')">Ask about Puddingstone ↗</button>
+  </div>
+
+  <!-- TECHNIQUE -->
+  <div id="section-technique" class="section">
+    <div class="card">
+      <h3>The retrieve mindset</h3>
+      <p style="margin-bottom:10px">Most beginners reel back to shore as fast as possible just to cast again. This is the #1 mistake. The lure is only fishing when it's IN the water moving correctly.</p>
+      <div class="tip-box"><strong>Slow down.</strong> Most beginners retrieve 2–3x too fast. A slower retrieve gives fish time to react. Experiment until you find what works that day.</div>
+    </div>
+    <div class="card">
+      <h3>The "count-down" method</h3>
+      <p style="margin-bottom:10px">This is how you figure out what depth fish are at — essential for consistent catches.</p>
+      <div class="step"><div class="step-num">1</div><div class="step-body">Cast out. Let the lure sink, counting "1, 2, 3..." as it falls.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body">Start your retrieve at "3" (shallow) first. Work the shallow zone. No bites? Try again at "6", then "10" (deeper each time).</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body">Once you get a bite at a specific count, repeat that count every cast. You've found the depth fish are holding at.</div></div>
+    </div>
+    <div class="card">
+      <h3>Cover the water</h3>
+      <p style="margin-bottom:10px">Don't cast the same spot 10 times and give up. Work an area systematically:</p>
+      <ul>
+        <li><strong>Fan casting</strong> — Cast at 10 o'clock, 11, 12, 1, 2. Cover a full 180° arc in front of you before moving</li>
+        <li><strong>Work the edges</strong> — Cast parallel to the bank, close to structure. Fish sit on the EDGE of cover, not always in the middle of open water</li>
+        <li>Move 10–15 feet down the bank after covering an area with no bites</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Detecting & setting the hook</h3>
+      <ul>
+        <li><strong>Keep your rod tip up</strong> during retrieve — this keeps tension on the line so you feel bites</li>
+        <li>Bites feel like: a thump, a sudden weight, the line going slack, or just "different" resistance</li>
+        <li><strong>When you feel something — set the hook immediately.</strong> A quick snap of the wrist upward. Don't hesitate.</li>
+        <li>With lures, fish often hook themselves. But a firm hookset seals the deal.</li>
+        <li>Keep steady pressure on the fish while reeling — don't let slack form or the hook can fall out</li>
+      </ul>
+    </div>
+    <button class="ask-btn" onclick="sendPrompt('How do I know if I am getting a bite vs just feeling weeds?')">Ask about detecting bites ↗</button>
+  </div>
+
+  <!-- READING WATER -->
+  <div id="section-reading" class="section">
+    <div class="card">
+      <h3>Where fish actually are</h3>
+      <p style="margin-bottom:10px">Fish are not randomly distributed. They follow three things: <strong>food, cover, and comfort</strong>. Find these and you find fish.</p>
+    </div>
+    <div class="card">
+      <h3>Structure & cover to target</h3>
+      <div class="grid2">
+        <div class="lure-card">
+          <h4>Docks & piers</h4>
+          <p>Bass and other fish love the shade. Cast parallel to the dock, skip lures under it. The posts create ambush points.</p>
+        </div>
+        <div class="lure-card">
+          <h4>Fallen trees / brush</h4>
+          <p>Cast right to the edge — fish hold just outside the branches. A cast that gets snagged occasionally means you're fishing close enough.</p>
+        </div>
+        <div class="lure-card">
+          <h4>Rocky points & banks</h4>
+          <p>Rocks hold heat and attract baitfish. Fish the edges where rock meets soft bottom.</p>
+        </div>
+        <div class="lure-card">
+          <h4>Weeds & vegetation</h4>
+          <p>Cast to the edge of weed lines, not into them. Weed edges concentrate fish because baitfish hide there.</p>
+        </div>
+        <div class="lure-card">
+          <h4>Inlets & outlets</h4>
+          <p>Moving water = oxygenation and food delivery. Fish often stack here, especially in summer.</p>
+        </div>
+        <div class="lure-card">
+          <h4>Depth changes</h4>
+          <p>Where shallow meets deep (drop-offs) is one of the most productive areas in any lake. Fish sit at the edge of the drop, using depth to escape or ambush.</p>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Seasonal fish location (SoCal)</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Season</th><th>Water temp</th><th>Where fish are</th></tr>
+          <tr><td>Winter (Dec–Feb)</td><td>48–58°F</td><td>Deep, slow. Fish bottom or very slowly near structure. Bass go sluggish.</td></tr>
+          <tr><td>Spring (Mar–May)</td><td>58–68°F</td><td>Shallow! Pre-spawn and spawn. Best time of year. Fish near banks, coves, weeds.</td></tr>
+          <tr><td>Summer (Jun–Sep)</td><td>72–85°F</td><td>Early morning shallow, then deep midday. Target shaded areas in heat of day.</td></tr>
+          <tr><td>Fall (Oct–Nov)</td><td>62–72°F</td><td>Feeding heavily before winter. Shallow again, following baitfish schools.</td></tr>
+        </table>
+      </div>
+    </div>
+    <button class="ask-btn" onclick="sendPrompt('How do I find a drop-off when fishing from shore?')">Ask about finding drop-offs ↗</button>
+  </div>
+
+  <!-- CATCH PROCESS -->
+  <div id="section-catch" class="section">
+    <div class="card">
+      <h3>When you hook a fish</h3>
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Stay calm and keep tension.</strong> Keep the rod tip up, reel steadily. Don't force it — let the rod absorb the fight. If the fish runs, let it, but keep pressure on.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Reel when you can.</strong> When the fish isn't running, reel it in. Lower the rod slowly, then reel back up. Repeat ("pumping").</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Land the fish.</strong> Once close, wet your hand first. Lip-grab bass by the lower jaw. For trout, support the body with both hands — don't squeeze.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Hook removal.</strong> Use needle-nose pliers for a secure grip on the hook. Back it out the same direction it went in. If deeply hooked, use a hook remover tool.</div></div>
+    </div>
+    <div class="card">
+      <h3>Keeping fish (catch-to-table)</h3>
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Dispatch humanely.</strong> A firm rap on the back of the skull (right behind the eyes) with a small club or rock spike. This is fast and prevents suffering.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Bleed the fish (optional but improves taste).</strong> Cut the gills and put fish in a bucket of water for 30 seconds. This dramatically improves the flavor of the meat.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Ice immediately.</strong> Pack directly on ice in your cooler. Fish quality degrades fast in heat. Don't put in a dry bag — direct contact with ice is best. Dress with a rag between fish and ice if possible.</div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Clean within a few hours.</strong> At home: scale, gut, and rinse. Watch a 5-minute YouTube tutorial for your specific species — bass and trout have slightly different cleaning methods.</div></div>
+    </div>
+    <div class="card">
+      <h3>Catch & release (when not keeping)</h3>
+      <ul>
+        <li>Minimize air time — keep the fish in water as much as possible</li>
+        <li>Wet your hands before handling — dry hands remove their protective slime coat</li>
+        <li>Remove the hook quickly; if deeply hooked, cut the line — the hook will dissolve</li>
+        <li>Revive the fish by holding it underwater, pointing into any current, until it swims away on its own</li>
+      </ul>
+    </div>
+    <button class="ask-btn" onclick="sendPrompt('How do I clean and cook a trout I caught at Puddingstone?')">Ask about cooking your catch ↗</button>
+  </div>
+
+  <!-- NEXT LEVEL -->
+  <div id="section-next" class="section">
+    <div class="card">
+      <h3>Your progression path</h3>
+      <div class="table-wrap">
+        <table>
+          <tr><th>Level</th><th>Skills</th><th>Focus</th></tr>
+          <tr><td>Beginner</td><td>
+            <div class="prog-bar"><div class="prog-fill" style="width:100%"></div></div>
+          </td><td>Basic cast, overhead retrieve, snap swivel, license</td></tr>
+          <tr><td>Early intermediate</td><td>
+            <div class="prog-bar"><div class="prog-fill" style="width:60%"></div></div>
+          </td><td>Sidearm cast, count-down method, reading cover, setting hook confidently</td></tr>
+          <tr><td>Intermediate</td><td>
+            <div class="prog-bar"><div class="prog-fill" style="width:30%"></div></div>
+          </td><td>Multiple retrieve styles, seasonal patterns, different lure types, knot tying</td></tr>
+          <tr><td>Advanced</td><td>
+            <div class="prog-bar"><div class="prog-fill" style="width:10%"></div></div>
+          </td><td>Finesse techniques, electronics (fish finder), tournament-level pattern recognition</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Essential knots to learn (in order)</h3>
+      <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Improved Clinch Knot</strong> — The most important knot. Used to tie line to hook, swivel, or lure. Takes 2 minutes to learn. This is your #1 priority.</div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Palomar Knot</strong> — Stronger than clinch for braided line. Simple to tie, very secure. Great for jigs and heavier hooks.</div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Loop Knot (Rapala Knot)</strong> — Creates a loop so lures swing freely, giving better action. Makes a noticeable difference with smaller lures.</div></div>
+    </div>
+    <div class="card">
+      <h3>Resources that will accelerate your skills fast</h3>
+      <ul>
+        <li><strong>YouTube:</strong> "Tactical Bassin" and "1Rod1ReelFishing" — both excellent for beginners learning to catch fish from shore</li>
+        <li><strong>App:</strong> Fishbrain or Anglr — shows you where other anglers are catching fish locally, with species and lure info</li>
+        <li><strong>Talk to people at the lake.</strong> Ask "what are you using today?" — most anglers are happy to share. You'll learn more in 10 minutes than hours of reading.</li>
+        <li><strong>Fish the same spot multiple times.</strong> Familiarity with one water body beats fishing many different ones. You learn the spots, depths, and patterns.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>The mindset shift</h3>
+      <p style="line-height:1.7">Everyone at the water is focused on their own fishing — nobody is watching or judging you. The people who look "expert" were beginners once too, probably not that long ago. The fastest way to stop feeling like a novice is to <strong>go more often</strong>. Each trip — even with no fish — builds pattern recognition and muscle memory that compounds. You're already doing the right things.</p>
+    </div>
+    <button class="ask-btn" onclick="sendPrompt('What should I focus on for my next fishing trip to get my first catch?')">Plan my next trip ↗</button>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
